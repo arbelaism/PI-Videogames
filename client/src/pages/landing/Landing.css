@@ -1,0 +1,33 @@
+.pi__landing {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    padding: 2rem;
+    width: 100%;
+    height: 100vh;
+    background: url('../../assets/846480.png');
+    backdrop-filter: blur(20px);
+    background-size: cover;
+    background-position: center;
+}
+
+.pi__landing-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.pi__landing-container img {
+    width: 300px;
+}
+
+.pi__landing-container h1 {
+    font-family: var(--font-family);
+    color: white;
+    font-size: 3rem;
+    font-weight: 600;
+    letter-spacing: -2px;
+    line-height: 30px;
+    align-items: center;
+    margin-left: -20px;
+}
