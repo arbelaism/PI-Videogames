@@ -6,6 +6,9 @@ const getGames = require('../controllers/getGames')
 const searchGame = require('../controllers/searchGame')
 const getGenres = require('../controllers/getGenres')
 const getGameById = require('../controllers/getGameById')
+const createGame = require('../controllers/createGame.js')
+const getGamesDB = require('../controllers/getGamesDB')
+const searchGameDB = require('../controllers/searchGameDB')
 // Importar todos los routers;
 // Ejemplo: const authRouter = require('./auth.js');
 
@@ -14,40 +17,59 @@ const router = Router()
 // Configurar los routers
 // Ejemplo: router.use('/auth', authRouter);
 
-router.get('/api/games', async (req, res) => {
-    const { search } = req.query
+router.get('/videogames', async (req, res) => {
+    const { name } = req.query
 
     try {
-        if (search) {
-            const searchGameByName = await searchGame(API_KEY, search)
-            res.json(searchGameByName)
+        // TODO: limit 15 games per search
+        if (name) {
+            const gamesByName = await searchGame(API_KEY, name)
+            const gamesByNameDB = await searchGameDB(name)
+            if (gamesByName.length < 1 && gamesByNameDB.length < 1)
+                return res.status(404).json({ error: 'No existe el juego que buscas' })
+
+            const results = gamesByName.concat(gamesByNameDB)
+            res.json(results)
             return
         } else {
-            const response = await getGames(API_KEY)
-            res.json(response)
+            const gamesFromAPI = await getGames(API_KEY, 40)
+            const gamesFromDB = await getGamesDB()
+            const allGames = gamesFromAPI.concat(gamesFromDB)
+            res.json(allGames)
         }
     } catch (error) {
-        res.json({ err: error.message })
+        res.status(404).json({ err: error.message })
     }
 })
 
-router.get('/api/games/:id', async (req, res) => {
+router.post('/videogames', async (req, res) => {
+    const { name, description, image, releaseDate, rating, genres, platforms } = req.body
+
+    try {
+        const response = await createGame(name, description, image, releaseDate, rating, genres, platforms)
+        res.status(201).json(response)
+    } catch (error) {
+        res.status(404).json({ err: error.message })
+    }
+})
+
+router.get('/videogame/:id', async (req, res) => {
     const { id } = req.params
 
     try {
         const gameFounded = await getGameById(API_KEY, id)
         res.json(gameFounded)
     } catch (error) {
-        res.json({ err: error.message })
+        res.status(404).json({ err: error.message })
     }
 })
 
-router.get('/api/genres', async (req, res) => {
+router.get('/genres', async (req, res) => {
     try {
         const response = await getGenres(API_KEY)
         res.json(response)
     } catch (error) {
-        res.json({ err: error.message })
+        res.status(404).json({ err: error.message })
     }
 })
 

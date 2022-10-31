@@ -23,9 +23,7 @@ const { conn } = require('./src/db.js')
 // Syncing all the models at once.
 async function main() {
     try {
-        await conn.authenticate()
-        console.log('Connection has been established successfully.')
-        conn.sync({ force: true }).then(() => {
+        conn.sync({ force: false }).then(() => {
             server.listen(3001, () => {
                 console.log('%s listening at 3001') // eslint-disable-line no-console
             })
