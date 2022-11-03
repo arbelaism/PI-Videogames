@@ -32,7 +32,7 @@ router.get('/videogames', async (req, res) => {
             res.json(results)
             return
         } else {
-            const gamesFromAPI = await getGames(API_KEY, 40)
+            const gamesFromAPI = await getGames(API_KEY, 20)
             const gamesFromDB = await getGamesDB()
             const allGames = gamesFromAPI.concat(gamesFromDB)
             res.json(allGames)
@@ -46,7 +46,15 @@ router.post('/videogames', async (req, res) => {
     const { name, description, image, releaseDate, rating, genres, platforms } = req.body
 
     try {
-        const response = await createGame(name, description, image, releaseDate, rating, genres, platforms)
+        const response = await createGame(
+            name,
+            description,
+            image,
+            releaseDate,
+            rating,
+            genres,
+            platforms
+        )
         res.status(201).json(response)
     } catch (error) {
         res.status(404).json({ err: error.message })

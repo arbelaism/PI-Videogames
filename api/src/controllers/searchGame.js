@@ -15,6 +15,7 @@ const searchGame = async (apiKey, game) => {
             id: game.id,
             name: game.name,
             released: game.released,
+            bg: game['background_image'],
             rating: game.rating
         }
     })
