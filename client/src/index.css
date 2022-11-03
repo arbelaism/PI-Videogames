@@ -1,7 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Edu+QLD+Beginner:wght@400;500;600;700&display=swap');
 
 :root {
     --font-family: 'Lato', sans-serif;
+    --font-logo: 'Edu QLD Beginner', cursive;
 
     --color-primary: #1a4d3e;
     --color-secondary: #364b44;

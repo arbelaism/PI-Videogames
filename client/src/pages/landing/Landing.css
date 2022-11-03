@@ -1,33 +1,46 @@
 .pi__landing {
-    display: flex;
-    justify-content: flex-start;
-    align-items: flex-start;
-    padding: 2rem;
-    width: 100%;
-    height: 100vh;
-    background: url('../../assets/846480.png');
-    backdrop-filter: blur(20px);
+    background: url('../../assets/5819.jpg');
+    background-color: var(--color-primary);
     background-size: cover;
     background-position: center;
 }
 
-.pi__landing-container {
+.pi_landing-wrapper {
+    backdrop-filter: blur(25px);
+    width: 100%;
+    height: 100vh;
+    z-index: 1;
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
+    justify-content: space-evenly;
     align-items: center;
 }
 
-.pi__landing-container img {
-    width: 300px;
+.pi__landing-description {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2;
+    max-width: 40%;
 }
 
-.pi__landing-container h1 {
+.pi__landing-description button {
+    all: unset;
     font-family: var(--font-family);
+    text-shadow: 0 -40px 100px, 0 0 2px, 0 0 1em #eeee04, 0 0 0.5em #eeee04, 0 0 0.1em #eeee04;
+    padding: 1rem 3rem;
     color: white;
-    font-size: 3rem;
-    font-weight: 600;
-    letter-spacing: -2px;
-    line-height: 30px;
-    align-items: center;
-    margin-left: -20px;
+    background-color: transparent;
+    font-size: 28px;
+    border: 2px solid #eeee04;
+    border-radius: 5px;
+    box-shadow: 0 0 0.2rem #fff, 0 0 0.2rem #fff, 0 0 2rem #eeee04, 0 0 0.8rem #eeee04,
+        0 0 2.8rem #eeee04, inset 0 0 1.3rem #eeee04;
+    cursor: pointer;
+    transition: all 0.5s;
+}
+
+.pi__landing-description button:hover {
+    color: #fcfaec;
+    background-color: #1e1c0c;
 }

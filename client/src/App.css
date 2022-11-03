@@ -10,6 +10,12 @@ body {
     font-family: var(--font-family);
 }
 
+a,
+input,
+button {
+    all: unset;
+}
+
 .section__padding {
     padding: 4rem 6rem;
 }

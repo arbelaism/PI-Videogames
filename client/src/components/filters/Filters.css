@@ -1,0 +1,12 @@
+.pi__filters {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.pi__filters-select {
+    background-color: #fff;
+    width: 150px;
+    padding: 0.5rem 0.5rem;
+    margin: 0 5px;
+}

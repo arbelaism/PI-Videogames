@@ -1,0 +1,16 @@
+.pi__search {
+    display: flex;
+    margin: 0 1rem;
+}
+
+.pi__search > form > input {
+    background: #fff;
+    padding: 0.5rem 1rem;
+    outline: none;
+}
+
+.pi__search > form > button {
+    background: #fff;
+    padding: 0.5rem 1rem;
+    outline: none;
+}
