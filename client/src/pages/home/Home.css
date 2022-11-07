@@ -9,6 +9,10 @@
     padding: 2rem;
 }
 
+.pi__home-navbar {
+    width: 100%;
+}
+
 .pi__home-container {
     margin-top: 4rem;
 }

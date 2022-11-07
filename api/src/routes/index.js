@@ -5,6 +5,7 @@ const { API_KEY } = process.env
 const getGames = require('../controllers/getGames')
 const searchGame = require('../controllers/searchGame')
 const getGenres = require('../controllers/getGenres')
+const getPlatforms = require('../controllers/getPlatforms')
 const getGameById = require('../controllers/getGameById')
 const createGame = require('../controllers/createGame.js')
 const getGamesDB = require('../controllers/getGamesDB')
@@ -26,13 +27,15 @@ router.get('/videogames', async (req, res) => {
             const gamesByName = await searchGame(API_KEY, name)
             const gamesByNameDB = await searchGameDB(name)
             if (gamesByName.length < 1 && gamesByNameDB.length < 1)
-                return res.status(404).json({ error: 'No existe el juego que buscas' })
+                return res
+                    .status(404)
+                    .json({ error: 'No existe el juego que buscas' })
 
             const results = gamesByName.concat(gamesByNameDB)
             res.json(results)
             return
         } else {
-            const gamesFromAPI = await getGames(API_KEY, 20)
+            const gamesFromAPI = await getGames(API_KEY, 120)
             const gamesFromDB = await getGamesDB()
             const allGames = gamesFromAPI.concat(gamesFromDB)
             res.json(allGames)
@@ -43,7 +46,8 @@ router.get('/videogames', async (req, res) => {
 })
 
 router.post('/videogames', async (req, res) => {
-    const { name, description, image, releaseDate, rating, genres, platforms } = req.body
+    const { name, description, image, releaseDate, rating, genres, platforms } =
+        req.body
 
     try {
         const response = await createGame(
@@ -75,6 +79,15 @@ router.get('/videogame/:id', async (req, res) => {
 router.get('/genres', async (req, res) => {
     try {
         const response = await getGenres(API_KEY)
+        res.json(response)
+    } catch (error) {
+        res.status(404).json({ err: error.message })
+    }
+})
+
+router.get('/platforms', async (req, res) => {
+    try {
+        const response = await getPlatforms()
         res.json(response)
     } catch (error) {
         res.status(404).json({ err: error.message })

@@ -29,8 +29,9 @@ module.exports = sequelize => {
             rating: {
                 type: DataTypes.INTEGER
             },
-            platforms: {
-                type: DataTypes.ARRAY(DataTypes.STRING),
+            createdByUser: {
+                type: DataTypes.BOOLEAN,
+                defaultValue: true,
                 allowNull: false
             }
         },

@@ -1,0 +1,12 @@
+.pi__create {
+    margin: 0 auto;
+    width: 50%;
+    border: 1px solid red;
+    padding: 2rem;
+}
+
+.pi__create > form {
+    display: grid;
+    align-items: center;
+    grid-template-columns: 1fr 3fr;
+}

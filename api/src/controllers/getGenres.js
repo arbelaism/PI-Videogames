@@ -6,7 +6,7 @@ const createGenres = async genres => {
 
     genres.forEach(async genre => {
         genresFromApi = await Genre.findOrCreate({
-            where: { name: genre.name.toLowerCase() }
+            where: { name: genre.toLowerCase() }
         })
     })
 
@@ -36,15 +36,13 @@ const getGenres = async apiKey => {
         const response = await axios.get(url)
 
         response.data.results.forEach(genre => {
-            genres.push({
-                name: genre.name.toLowerCase()
-            })
+            genres.push(genre.name.toLowerCase())
         })
 
         if (genresFromDB.length > 0 && genres.length === genresFromDB.length) {
             return genresFromDB
         } else {
-            genres = createGenres(genres)
+            genres = createGenres(genres.sort())
             return genres
         }
     } catch (error) {

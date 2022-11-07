@@ -1,0 +1,14 @@
+.pi__pagination {
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.pi__pagination > button {
+    background-color: white;
+    color: black;
+    padding: 1rem;
+    cursor: pointer;
+    margin: 0px 10px;
+}

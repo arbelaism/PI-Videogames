@@ -7,11 +7,19 @@
     flex-direction: column;
 }
 
+.pi__navbar-head {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
 .pi__navbar-logo {
     height: 40px;
     display: flex;
     align-items: center;
     justify-content: center;
+    cursor: pointer;
 }
 
 .pi__navbar-logo > h1 {
@@ -35,6 +43,20 @@
 .pi__navbar-form {
     display: flex;
     align-items: center;
-    justify-content: center;
     margin-top: 2rem;
+}
+
+.pi__navbar-head_buttons {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.pi__navbar-head_buttons > button,
+.pi__navbar-head_buttons > a {
+    background: white;
+    padding: 0.5rem 1rem;
+    color: black;
+    margin: 0 10px;
+    cursor: pointer;
 }

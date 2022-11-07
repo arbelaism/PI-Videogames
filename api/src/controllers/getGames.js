@@ -17,7 +17,11 @@ const getGames = async (apiKey, amount) => {
                     id: game['id'],
                     name: game['name'],
                     released: game['released'],
-                    bg: game['background_image']
+                    bg: game['background_image'],
+                    rating: game['rating'],
+                    genres: game['genres'].map(g => {
+                        return { id: g.id, name: g.name }
+                    })
                 })
             })
 
