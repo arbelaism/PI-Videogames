@@ -27,20 +27,22 @@
 .pi__landing-description button {
     all: unset;
     font-family: var(--font-family);
-    text-shadow: 0 -40px 100px, 0 0 2px, 0 0 1em #eeee04, 0 0 0.5em #eeee04, 0 0 0.1em #eeee04;
+    text-shadow: 0 -40px 100px, 0 0 2px, 0 0 1em #eeee04, 0 0 0.5em #eeee04,
+        0 0 0.1em #eeee04;
     padding: 1rem 3rem;
     color: white;
     background-color: transparent;
     font-size: 28px;
     border: 2px solid #eeee04;
     border-radius: 5px;
-    box-shadow: 0 0 0.2rem #fff, 0 0 0.2rem #fff, 0 0 2rem #eeee04, 0 0 0.8rem #eeee04,
-        0 0 2.8rem #eeee04, inset 0 0 1.3rem #eeee04;
+    box-shadow: 0 0 0.2rem #fff, 0 0 0.2rem #fff, 0 0 2rem #eeee04,
+        0 0 0.8rem #eeee04, 0 0 2.8rem #eeee04, inset 0 0 1.3rem #eeee04;
     cursor: pointer;
     transition: all 0.5s;
 }
 
 .pi__landing-description button:hover {
     color: #fcfaec;
-    background-color: #1e1c0c;
+    box-shadow: 0 0 0.4rem #fff, 0 0 0.2rem #fff, 0 0 6rem #eeee04,
+        0 0 10rem #eeee04, 0 0 2.8rem #eeee04, inset 0 0 1.5rem #eeee04;
 }

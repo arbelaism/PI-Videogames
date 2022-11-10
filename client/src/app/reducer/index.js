@@ -6,6 +6,7 @@ import {
     FILTER_BY_RATING,
     FILTER_BY_SOURCE,
     GET_ALL_GAMES,
+    GET_GAME_DETAIL,
     GET_GENRES,
     GET_PLATFORMS,
     SEARCH_GAME
@@ -15,7 +16,9 @@ const initialState = {
     games: [],
     gamesSorted: [],
     genres: [],
-    platforms: []
+    platforms: [],
+    gameDetail: [],
+    error: []
 }
 
 const rootReducer = (state = initialState, action) => {
@@ -23,7 +26,12 @@ const rootReducer = (state = initialState, action) => {
         case GET_ALL_GAMES:
             return {
                 ...state,
-                games: [...action.payload]
+                games: action.payload
+            }
+        case GET_GAME_DETAIL:
+            return {
+                ...state,
+                gameDetail: action.payload
             }
         case CREATE_GAME:
             return {
@@ -41,14 +49,21 @@ const rootReducer = (state = initialState, action) => {
                 platforms: [...action.payload]
             }
         case SEARCH_GAME:
+            state.error = []
+            if (action.payload.hasOwnProperty('error'))
+                return {
+                    ...state,
+                    error: [...state.error, action.payload.error]
+                }
+
             return {
                 ...state,
-                games: action.payload
+                gamesSorted: action.payload
             }
         case FILTER_BY_AZ:
             return {
                 ...state,
-                gamesSorted: [...action.payload]
+                gamesSorted: action.payload
             }
         case FILTER_BY_RATING:
             return {
@@ -56,6 +71,15 @@ const rootReducer = (state = initialState, action) => {
                 gamesSorted: [...action.payload]
             }
         case FILTER_BY_GENRE:
+            state.error = []
+            if (action.payload.length === 0)
+                return {
+                    ...state,
+                    error: [
+                        ...state.error,
+                        'No hay juegos con el género que buscas'
+                    ]
+                }
             return {
                 ...state,
                 gamesSorted: [...action.payload]
@@ -68,7 +92,9 @@ const rootReducer = (state = initialState, action) => {
         case CLEAR_FILTER:
             return {
                 ...state,
-                gamesSorted: action.payload
+                games: action.payload,
+                gamesSorted: [],
+                error: {}
             }
         default:
             return state

@@ -24,9 +24,21 @@ export const getAllGames = () => {
     }
 }
 
+export const getGameById = (id, createdByUser) => {
+    return async function (dispatch) {
+        const response = await axios.get(
+            `http://localhost:3001/videogame/${id}?db=${createdByUser}`
+        )
+
+        return dispatch({
+            type: GET_GAME_DETAIL,
+            payload: response.data
+        })
+    }
+}
+
 export const createGame = data => {
     return async function (dispatch) {
-        console.log('DISPATCH', data)
         const response = await axios.post(
             'http://localhost:3001/videogames',
             data
@@ -62,22 +74,30 @@ export const getPlatforms = () => {
 
 export const searchGame = name => {
     return async function (dispatch) {
-        const response = await axios.get(
-            `http://localhost:3001/videogames?name=${name}`
-        )
+        try {
+            const response = await axios.get(
+                `http://localhost:3001/videogames?name=${name}`,
+                { validateStatus: false }
+            )
 
-        return dispatch({
-            type: SEARCH_GAME,
-            payload: response.data
-        })
+            return dispatch({
+                type: SEARCH_GAME,
+                payload: response.data
+            })
+        } catch (error) {
+            console.log(error.message)
+        }
     }
 }
 
 export const filterGamesByName = (sort, games) => {
     return function (dispatch) {
-        const sortedGames = games.sort((a, b) => {
-            if (a.name < b.name) return sort === 'AZ' ? -1 : 1
-            if (a.name > b.name) return sort === 'AZ' ? 1 : -1
+        let sortedGames = [...games]
+        sortedGames = sortedGames.sort((a, b) => {
+            if (a.name.toLowerCase() < b.name.toLowerCase())
+                return sort === 'AZ' ? -1 : 1
+            if (a.name.toLowerCase() > b.name.toLowerCase())
+                return sort === 'AZ' ? 1 : -1
             return 0
         })
 
@@ -90,7 +110,8 @@ export const filterGamesByName = (sort, games) => {
 
 export const filterGamesByRating = (sort, games) => {
     return function (dispatch) {
-        const sortedGames = games.sort((a, b) => {
+        let sortedGames = [...games]
+        sortedGames = sortedGames.sort((a, b) => {
             if (a.rating < b.rating) return sort === 'ratingAsc' ? -1 : 1
             if (a.rating > b.rating) return sort === 'ratingAsc' ? 1 : -1
             return 0
@@ -121,10 +142,13 @@ export const filterGamesBySource = (source, games) => {
         let sortedGames
         if (source !== 'API') {
             sortedGames = games.filter(g => g.createdByUser)
-        } else {
+        }
+        if (source === 'API') {
             sortedGames = games.filter(g => !g.createdByUser)
         }
-        console.log(sortedGames)
+        if (source === 'none') {
+            sortedGames = []
+        }
         return dispatch({
             type: FILTER_BY_SOURCE,
             payload: sortedGames
@@ -132,16 +156,9 @@ export const filterGamesBySource = (source, games) => {
     }
 }
 
-export const clearFilters = () => {
+export const clearFilters = games => {
     return {
         type: CLEAR_FILTER,
-        payload: []
-    }
-}
-
-export const toggleLoading = state => {
-    return {
-        type: TOGGLE_LOADING,
-        payload: state
+        payload: games
     }
 }

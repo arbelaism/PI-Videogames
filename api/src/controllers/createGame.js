@@ -7,7 +7,8 @@ const createGame = async (
     releaseDate,
     rating,
     genres,
-    platforms
+    platforms,
+    review
 ) => {
     if (!name) throw new Error('name missing')
     if (!description) throw new Error('description missing')
@@ -17,11 +18,10 @@ const createGame = async (
         name,
         description,
         image,
+        review,
         releaseDate,
         rating
     })
-    console.log(genres)
-    console.log(platforms)
 
     if (genres.length) {
         genres.map(async genre => {

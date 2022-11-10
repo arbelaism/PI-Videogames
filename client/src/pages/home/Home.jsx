@@ -1,6 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import './Home.css'
-import { GameCard, Navbar, Pagination, Loader } from '../../components/index'
+import {
+    GameCard,
+    Navbar,
+    Pagination,
+    Loader,
+    ErrorHandler
+} from '../../components/index'
 import * as actions from '../../app/actions/index'
 import { useDispatch, useSelector } from 'react-redux'
 
@@ -12,6 +18,7 @@ const Home = () => {
     const dispatch = useDispatch()
     const games = useSelector(state => state.games)
     const gamesSorted = useSelector(state => state.gamesSorted)
+    const error = useSelector(state => state.error)
 
     useEffect(() => {
         setLoading(true)
@@ -20,7 +27,7 @@ const Home = () => {
         dispatch(actions.getPlatforms())
         setTimeout(() => {
             setLoading(false)
-        }, 2500)
+        }, 4000)
     }, [])
 
     const lastCardIndex = currentPage * cardsPerPage
@@ -33,32 +40,22 @@ const Home = () => {
     }
 
     return (
-        <div className="pi__home">
+        <div className="pi__home section__padding">
             <div className="pi__home-navbar">
-                <Navbar />
+                <Navbar
+                    setCurrentPage={setCurrentPage}
+                    setLoading={setLoading}
+                />
             </div>
             <div className="pi__home-container">
-                <h3>Games</h3>
                 <div className="pi__home-games">
                     {loading ? (
                         <Loader />
-                    ) : gamesSorted.length > 0 ? (
-                        currentCards.map(game => {
-                            return (
-                                <GameCard
-                                    key={game.id}
-                                    id={game.id}
-                                    name={game.name}
-                                    bg={game.bg}
-                                    rating={game.rating}
-                                    released={game.released}
-                                    genres={game.genres}
-                                />
-                            )
-                        })
+                    ) : error.length ? (
+                        <ErrorHandler error={error} />
                     ) : (
-                        games &&
-                        currentCards.map(game => {
+                        currentCards?.map(game => {
+                            console.log(game.createdByUser)
                             return (
                                 <GameCard
                                     key={game.id}
@@ -66,23 +63,25 @@ const Home = () => {
                                     name={game.name}
                                     bg={game.bg}
                                     rating={game.rating}
-                                    released={game.released}
                                     genres={game.genres}
+                                    db={
+                                        game.createdByUser === undefined
+                                            ? false
+                                            : true
+                                    }
                                 />
                             )
                         })
                     )}
                 </div>
             </div>
-            {gamesSorted.length > 0 ? (
+            {!error.length && (
                 <Pagination
-                    totalCards={gamesSorted.length}
-                    cardsPerPage={cardsPerPage}
-                    setCurrentPage={setCurrentPage}
-                />
-            ) : (
-                <Pagination
-                    totalCards={games.length}
+                    totalCards={
+                        gamesSorted.length > 0
+                            ? gamesSorted.length
+                            : games.length
+                    }
                     cardsPerPage={cardsPerPage}
                     setCurrentPage={setCurrentPage}
                 />

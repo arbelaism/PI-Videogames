@@ -22,5 +22,25 @@
     position: absolute;
     top: 7.5rem;
     left: 2.5rem;
-    text-shadow: 0 -40px 100px, 0 0 2px, 0 0 1em #eeee04, 0 0 0.5em #eeee04, 0 0 0.1em #eeee04;
+    text-shadow: 0 -40px 100px, 0 0 2px, 0 0 1em #eeee04, 0 0 0.5em #eeee04,
+        0 0 0.1em #eeee04;
+    animation: flicker 1.5s infinite alternate;
+}
+
+@keyframes flicker {
+    0%,
+    18%,
+    22%,
+    25%,
+    53%,
+    57%,
+    100% {
+        text-shadow: 0 -40px 100px, 0 0 2px, 0 0 1em #eeee04, 0 0 0.5em #eeee04,
+            0 0 0.1em #eeee04;
+    }
+    20%,
+    24%,
+    55% {
+        text-shadow: none;
+    }
 }

@@ -4,7 +4,7 @@ import logo from '../../assets/logo.png'
 import StarIcon from '../../assets/star-solid.svg'
 import './GameCard.css'
 
-const GameCard = ({ id, name, bg, rating, genres }) => {
+const GameCard = ({ id, name, bg, rating, genres, db }) => {
     return (
         <div className="pi__game_card">
             <img
@@ -13,7 +13,7 @@ const GameCard = ({ id, name, bg, rating, genres }) => {
                 className="pi__game_card-img"
             />
             <div className="pi__game_card-content">
-                <Link to={`/game/${id}`}>{name}</Link>
+                <Link to={`/game/${id}?db=${db}`}>{name}</Link>
                 <ul>
                     {genres &&
                         genres?.map(g => {

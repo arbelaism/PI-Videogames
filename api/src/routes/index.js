@@ -10,6 +10,7 @@ const getGameById = require('../controllers/getGameById')
 const createGame = require('../controllers/createGame.js')
 const getGamesDB = require('../controllers/getGamesDB')
 const searchGameDB = require('../controllers/searchGameDB')
+const getGameByIdDB = require('../controllers/getGameByIdDB')
 // Importar todos los routers;
 // Ejemplo: const authRouter = require('./auth.js');
 
@@ -46,8 +47,16 @@ router.get('/videogames', async (req, res) => {
 })
 
 router.post('/videogames', async (req, res) => {
-    const { name, description, image, releaseDate, rating, genres, platforms } =
-        req.body
+    const {
+        name,
+        description,
+        image,
+        releaseDate,
+        rating,
+        genres,
+        platforms,
+        review
+    } = req.body
 
     try {
         const response = await createGame(
@@ -57,7 +66,8 @@ router.post('/videogames', async (req, res) => {
             releaseDate,
             rating,
             genres,
-            platforms
+            platforms,
+            review
         )
         res.status(201).json(response)
     } catch (error) {
@@ -67,8 +77,15 @@ router.post('/videogames', async (req, res) => {
 
 router.get('/videogame/:id', async (req, res) => {
     const { id } = req.params
+    const { db } = req.query
 
+    console.log(req.query)
     try {
+        if (db === 'true') {
+            const game = await getGameByIdDB(id)
+            res.json(game)
+            return
+        }
         const gameFounded = await getGameById(API_KEY, id)
         res.json(gameFounded)
     } catch (error) {

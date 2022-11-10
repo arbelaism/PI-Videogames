@@ -15,7 +15,13 @@ const getGameById = async (apiKey, id) => {
             description: response.data.description,
             released: response.data.released,
             rating: response.data.rating,
-            bg: response.data['background_image']
+            bg: response.data['background_image'],
+            genres: response.data['genres'].map(g => {
+                return { id: g.id, name: g.name }
+            }),
+            platforms: response.data['platforms'].map(p => {
+                return { id: p.platform.id, name: p.platform.name }
+            })
         }
     } catch (error) {
         throw new Error('error in getGameById')

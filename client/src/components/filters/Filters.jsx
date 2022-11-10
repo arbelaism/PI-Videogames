@@ -1,16 +1,16 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import {
     getGenres,
     filterGamesByName,
     filterGamesByRating,
     filterGamesByGenres,
-    filterGamesBySource
+    filterGamesBySource,
+    clearFilters
 } from '../../app/actions/index'
 import './Filters.css'
 
 const Filters = () => {
-    const [order, setOrder] = useState('')
     const dispatch = useDispatch()
     const genres = useSelector(state => state.genres)
     const games = useSelector(state => state.games)
@@ -19,32 +19,38 @@ const Filters = () => {
         dispatch(getGenres())
     }, [])
 
-    const handleState = e => {
-        setOrder(e.target.value)
-    }
-
     const filterByRating = e => {
         e.preventDefault()
-        dispatch(filterGamesByRating(order, games))
-        setOrder('')
+        dispatch(filterGamesByRating(e.target.value, games))
     }
 
     const filterAZ = e => {
         e.preventDefault()
-        dispatch(filterGamesByName(order, games))
-        setOrder('')
+        dispatch(filterGamesByName(e.target.value, games))
     }
 
     const filterByGenre = e => {
         e.preventDefault()
-        dispatch(filterGamesByGenres(order, games))
-        setOrder('')
+        dispatch(filterGamesByGenres(e.target.value, games))
     }
 
     const filterBySource = e => {
         e.preventDefault()
-        dispatch(filterGamesBySource(order, games))
-        setOrder('')
+        dispatch(filterGamesBySource(e.target.value, games))
+    }
+
+    const handleClear = () => {
+        const sourceFilterSelect = document.getElementById('filterBySource')
+        const genreFilterSelect = document.getElementById('filterByGenre')
+        const ratingFilterSelect = document.getElementById('filterByRating')
+        const azFilterSelect = document.getElementById('filterByAZ')
+
+        dispatch(clearFilters(games))
+
+        sourceFilterSelect[0].setAttribute('selected', 'selected')
+        genreFilterSelect[0].setAttribute('selected', 'selected')
+        ratingFilterSelect[0].setAttribute('selected', 'selected')
+        azFilterSelect[0].setAttribute('selected', 'selected')
     }
 
     return (
@@ -53,7 +59,7 @@ const Filters = () => {
                 name="filterBySource"
                 id="filterBySource"
                 className="pi__filters-select"
-                onChange={handleState}>
+                onChange={filterBySource}>
                 <option key="none" value="none">
                     Filter by Source
                 </option>
@@ -66,9 +72,9 @@ const Filters = () => {
             </select>
             <select
                 name="filterByGenre"
-                id="genres"
+                id="filterByGenre"
                 className="pi__filters-select"
-                onChange={handleState}>
+                onChange={filterByGenre}>
                 <option key="none" value="none">
                     Filter by Genres
                 </option>
@@ -88,8 +94,8 @@ const Filters = () => {
                 name="filterByRating"
                 id="filterByRating"
                 className="pi__filters-select"
-                onChange={handleState}>
-                <option key="none" value="none">
+                onChange={filterByRating}>
+                <option key="none" value="none" onClick={filterByRating}>
                     Filter by Rating
                 </option>
                 <option value="ratingAsc" onClick={filterByRating}>
@@ -103,7 +109,7 @@ const Filters = () => {
                 name="filterByAZ"
                 id="filterByAZ"
                 className="pi__filters-select"
-                onChange={handleState}>
+                onChange={filterAZ}>
                 <option key="none" value="none">
                     Filter alphabetically
                 </option>
@@ -114,6 +120,7 @@ const Filters = () => {
                     Z-A
                 </option>
             </select>
+            <button onClick={handleClear}>CLEAR</button>
         </div>
     )
 }

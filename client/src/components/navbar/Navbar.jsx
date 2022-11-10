@@ -1,31 +1,29 @@
 import React from 'react'
 import './Navbar.css'
-import logo from '../../assets/logoH.png'
-import { SearchBar, Filters } from '../index'
-import { useDispatch } from 'react-redux'
-import { clearFilters } from '../../app/actions'
+import PlusImage from '../../assets/plus-solid.svg'
+import { SearchBar, Filters, NavbarLogo } from '../index'
 import { Link } from 'react-router-dom'
 
-const Navbar = () => {
-    const dispatch = useDispatch()
-
-    const handleClear = () => {
-        dispatch(clearFilters())
-    }
+const Navbar = ({ setCurrentPage, setLoading }) => {
     return (
         <div className="pi__navbar">
             <div className="pi__navbar-head">
                 <Link to="/home">
-                    <div className="pi__navbar-logo">
-                        <img src={logo} alt="logoH" />
-                        <h1>Videogames</h1>
-                    </div>
+                    <NavbarLogo />
                 </Link>
-                <SearchBar />
+                <SearchBar
+                    setCurrentPage={setCurrentPage}
+                    setLoading={setLoading}
+                />
                 <div className="pi__navbar-head_buttons">
-                    <button onClick={handleClear}>CLEAR</button>
                     <Link to="/create">
-                        <button>ADD</button>
+                        <img src={PlusImage} alt="plus" className="init_plus" />
+                        <img
+                            src={PlusImage}
+                            alt="plus"
+                            className="hover_plus"
+                        />
+                        <span>Add new game</span>
                     </Link>
                 </div>
             </div>

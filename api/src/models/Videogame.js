@@ -23,6 +23,9 @@ module.exports = sequelize => {
             image: {
                 type: DataTypes.STRING
             },
+            review: {
+                type: DataTypes.STRING
+            },
             releaseDate: {
                 type: DataTypes.DATEONLY
             },

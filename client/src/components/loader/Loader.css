@@ -1,5 +1,6 @@
 .pi__loader {
     width: 100%;
+    height: 100vh;
     background-color: #111;
     color: white;
     display: flex;

@@ -6,7 +6,7 @@ const getGames = async (apiKey, amount) => {
     try {
         let games = []
         let url = `https://api.rawg.io/api/games?key=${apiKey}`
-        let gamesRequested = amount / 20
+        let gamesRequested = Math.round(amount / 20)
 
         // TODO: REFACTOR
         for (let index = 0; index < gamesRequested; index++) {
@@ -21,6 +21,9 @@ const getGames = async (apiKey, amount) => {
                     rating: game['rating'],
                     genres: game['genres'].map(g => {
                         return { id: g.id, name: g.name }
+                    }),
+                    platforms: game['platforms'].map(p => {
+                        return { id: p.platform.id, name: p.platform.name }
                     })
                 })
             })
