@@ -1,22 +1,30 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import logo from '../../assets/logo.png'
+import StarIcon from '../../assets/star-solid.svg'
 import './GameCard.css'
 
-const GameCard = ({ id, name, released, bg, rating, genres }) => {
+const GameCard = ({ id, name, bg, rating, genres }) => {
     return (
         <div className="pi__game_card">
-            <img src={bg} alt="game-background" className="pi__game_card-img" />
-            <Link to={`/game/${id}`}>
-                <h3>{name}</h3>
-            </Link>
-            <p>{released}</p>
-            <p>{rating}</p>
-            <ul>
-                {genres &&
-                    genres.map(g => {
-                        return <li key={g.id}>{g.name}</li>
-                    })}
-            </ul>
+            <img
+                src={bg ? bg : logo}
+                alt="game-background"
+                className="pi__game_card-img"
+            />
+            <div className="pi__game_card-content">
+                <Link to={`/game/${id}`}>{name}</Link>
+                <ul>
+                    {genres &&
+                        genres?.map(g => {
+                            return <li key={g.id}>{g.name}</li>
+                        })}
+                </ul>
+                <div className="pi__game_card-rating">
+                    <img src={StarIcon} alt="star" />
+                    <p>{rating}</p>
+                </div>
+            </div>
         </div>
     )
 }
