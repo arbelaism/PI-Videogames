@@ -85,6 +85,15 @@ const rootReducer = (state = initialState, action) => {
                 gamesSorted: [...action.payload]
             }
         case FILTER_BY_SOURCE:
+            state.error = []
+            if (action.payload.length === 0)
+                return {
+                    ...state,
+                    error: [
+                        ...state.error,
+                        'No hay juegos en la DB'
+                    ]
+                }
             return {
                 ...state,
                 gamesSorted: [...action.payload]
@@ -94,7 +103,7 @@ const rootReducer = (state = initialState, action) => {
                 ...state,
                 games: action.payload,
                 gamesSorted: [],
-                error: {}
+                error: []
             }
         default:
             return state

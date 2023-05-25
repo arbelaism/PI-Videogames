@@ -13,7 +13,6 @@ import { useDispatch, useSelector } from 'react-redux'
 const Home = () => {
     const [currentPage, setCurrentPage] = useState(1)
     const [cardsPerPage, setCardsPerPage] = useState(12)
-    const [loading, setLoading] = useState(false)
 
     const dispatch = useDispatch()
     const games = useSelector(state => state.games)
@@ -21,13 +20,9 @@ const Home = () => {
     const error = useSelector(state => state.error)
 
     useEffect(() => {
-        setLoading(true)
         dispatch(actions.getAllGames())
         dispatch(actions.getGenres())
         dispatch(actions.getPlatforms())
-        setTimeout(() => {
-            setLoading(false)
-        }, 4000)
     }, [])
 
     const lastCardIndex = currentPage * cardsPerPage
@@ -44,18 +39,16 @@ const Home = () => {
             <div className="pi__home-navbar">
                 <Navbar
                     setCurrentPage={setCurrentPage}
-                    setLoading={setLoading}
                 />
             </div>
             <div className="pi__home-container">
                 <div className="pi__home-games">
-                    {loading ? (
+                    {currentCards.length < 1 ? (
                         <Loader />
                     ) : error.length ? (
                         <ErrorHandler error={error} />
                     ) : (
                         currentCards?.map(game => {
-                            console.log(game.createdByUser)
                             return (
                                 <GameCard
                                     key={game.id}

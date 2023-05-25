@@ -51,11 +51,10 @@ router.post('/videogames', async (req, res) => {
         name,
         description,
         image,
-        releaseDate,
+        released,
         rating,
         genres,
         platforms,
-        review
     } = req.body
 
     try {
@@ -63,11 +62,10 @@ router.post('/videogames', async (req, res) => {
             name,
             description,
             image,
-            releaseDate,
+            released,
             rating,
             genres,
             platforms,
-            review
         )
         res.status(201).json(response)
     } catch (error) {
@@ -79,7 +77,6 @@ router.get('/videogame/:id', async (req, res) => {
     const { id } = req.params
     const { db } = req.query
 
-    console.log(req.query)
     try {
         if (db === 'true') {
             const game = await getGameByIdDB(id)

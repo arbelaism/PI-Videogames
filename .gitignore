@@ -109,3 +109,4 @@ package-lock.json
 color_palettes/
 assets/
 videogame.png
+.prettierrc

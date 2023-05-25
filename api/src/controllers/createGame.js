@@ -4,11 +4,10 @@ const createGame = async (
     name,
     description,
     image,
-    releaseDate,
+    released,
     rating,
     genres,
     platforms,
-    review
 ) => {
     if (!name) throw new Error('name missing')
     if (!description) throw new Error('description missing')
@@ -18,8 +17,7 @@ const createGame = async (
         name,
         description,
         image,
-        review,
-        releaseDate,
+        released,
         rating
     })
 

@@ -3,7 +3,6 @@ const axios = require('axios')
 const getGameById = async (apiKey, id) => {
     if (!apiKey || !id) throw new Error('APIKEY or ID missing')
 
-    // TODO: CHECK ID IN DATABASE
     try {
         let url = `https://api.rawg.io/api/games/${id}?key=${apiKey}`
 

@@ -9,19 +9,23 @@
 }
 
 .pi__create-head {
-    width: 230px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 300px;
+    height: 90px;
     background-color: #111;
     padding: 15px;
-    border-radius: 25px;
+    border-radius: 0 0 0 25px;
     position: absolute;
-    top: 35px;
-    right: 230px;
+    top: 25px;
+    right: 190px;
     z-index: 5;
 }
 
 .pi__create-container {
     width: 75%;
-    min-height: 400px;
+    min-height: 690px;
     color: #eee;
     background-color: #eee;
     border-radius: 25px;
@@ -66,6 +70,68 @@
     padding: 2rem;
 }
 
+.pi__create-container_img {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    align-content: center;
+    background-color: #fff;
+    border-radius: 10px;
+    height: 64px;
+    position: relative;
+}
+
+.pi__create-container_img-input {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: #111;
+    cursor: pointer;
+}
+
+.pi__create-container_img-input > label {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.pi__create-container_img-input > label > img {
+    width: 32px;
+    height: 32px;
+    margin-right: 10px;
+}
+
+.pi__create-container_img-image {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+}
+.pi__create-container_img-image > img {
+    width: 100%;
+    height: 100%;
+    border: 1px solid #111;
+    object-fit: cover;
+    overflow: hidden;
+    border-radius: 50%;
+}
+
+.pi__create-container_img > button {
+    outline: none;
+    background-color: #fff;
+    margin: 0 5px;
+    width: 18px;
+    height: 18px;
+    border: 1px solid #111;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    position: absolute;
+    right: 16px;
+}
+
 .pi__create-container_side > h1 {
     font-size: 64px;
     font-weight: 800;
@@ -74,8 +140,12 @@
 
 .pi__create-container_form {
     flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     background-color: #111;
     padding: 2rem;
+    min-height: 690px;
 }
 
 .pi__create-container_form > h1 {
@@ -96,26 +166,45 @@
     display: flex;
     justify-content: space-around;
     align-items: center;
+    margin: 5px 0;
     flex: 1;
 }
 
 .pi__create-container_form-sm > input {
     width: 150px;
-    margin: 0 7px;
 }
 
 .pi__create-container_form-sm_rating {
     display: flex;
+    margin: 0.25rem;
+    width: 30%;
     align-items: center;
-    justify-content: space-between;
+    justify-content: space-around;
 }
 
 .pi__create-container_form-sm > label {
-    margin: 0 5px;
+    width: 33%;
+    white-space: nowrap;
 }
 
 .pi__create-container_form-sm_rating > label {
-    margin: 1rem;
+    margin-right: 7px;
+}
+
+.pi__create-container_form-sm_rating > input {
+    width: 44px;
+}
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    appearance: none;
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Firefox */
+input[type='number'] {
+    appearance: none;
+    -moz-appearance: textfield;
 }
 
 .pi__create-input {
@@ -136,6 +225,7 @@
     color: #111;
     padding: 0.5rem 1rem;
     outline: none;
+    border: none;
     border-radius: 5px;
     font-family: var(--font-family);
 }
@@ -213,11 +303,14 @@ textarea.danger {
 
 .button-selected {
     display: flex;
+    border: none;
+    outline: none;
     align-items: center;
     background: #111;
     color: #eee;
     width: 10px;
     height: 10px;
+    margin-left: 5px;
     text-align: center;
     cursor: pointer;
 }

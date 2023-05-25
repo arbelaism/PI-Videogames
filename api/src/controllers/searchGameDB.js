@@ -11,7 +11,7 @@ const searchGameDB = async name => {
         return {
             id: game.id,
             name: game.name,
-            released: game.releaseDate
+            released: game.released
         }
     })
 

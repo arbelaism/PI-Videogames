@@ -22,7 +22,7 @@ const Details = () => {
         dispatch(getGameById(id, query.get('db')))
         setTimeout(() => {
             setLoading(false)
-        }, 2000)
+        }, 1500)
     }, [])
 
     return (
@@ -51,6 +51,7 @@ const Details = () => {
                         </div>
                         <p>Released: &nbsp; {game.released}</p>
                     </div>
+                    {console.log(game.released)}
                     <div className="pi__detail-content">
                         <p
                             className="pi__detail-description"

@@ -4,7 +4,7 @@ import PlusImage from '../../assets/plus-solid.svg'
 import { SearchBar, Filters, NavbarLogo } from '../index'
 import { Link } from 'react-router-dom'
 
-const Navbar = ({ setCurrentPage, setLoading }) => {
+const Navbar = ({ setCurrentPage }) => {
     return (
         <div className="pi__navbar">
             <div className="pi__navbar-head">
@@ -13,7 +13,6 @@ const Navbar = ({ setCurrentPage, setLoading }) => {
                 </Link>
                 <SearchBar
                     setCurrentPage={setCurrentPage}
-                    setLoading={setLoading}
                 />
                 <div className="pi__navbar-head_buttons">
                     <Link to="/create">

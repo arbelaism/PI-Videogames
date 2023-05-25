@@ -14,44 +14,57 @@ export const CLEAR_FILTER = 'CLEAR_FILTER'
 export const TOGGLE_LOADING = 'TOGGLE_LOADING'
 
 export const getAllGames = () => {
-    return async function (dispatch) {
-        const response = await axios.get('http://localhost:3001/videogames')
+    return async function(dispatch) {
+        try {
+            const response = await axios.get('http://localhost:3001/videogames')
 
-        return dispatch({
-            type: GET_ALL_GAMES,
-            payload: response.data
-        })
+            return dispatch({
+                type: GET_ALL_GAMES,
+                payload: response.data
+            })
+
+        } catch (error) {
+            console.log(error.message)
+        }
     }
 }
 
 export const getGameById = (id, createdByUser) => {
-    return async function (dispatch) {
-        const response = await axios.get(
-            `http://localhost:3001/videogame/${id}?db=${createdByUser}`
-        )
+    return async function(dispatch) {
+        try {
+            const response = await axios.get(
+                `http://localhost:3001/videogame/${id}?db=${createdByUser}`
+            )
 
-        return dispatch({
-            type: GET_GAME_DETAIL,
-            payload: response.data
-        })
+            return dispatch({
+                type: GET_GAME_DETAIL,
+                payload: response.data
+            })
+        } catch (error) {
+            console.log(error.message)
+        }
     }
 }
 
 export const createGame = data => {
-    return async function (dispatch) {
-        const response = await axios.post(
-            'http://localhost:3001/videogames',
-            data
-        )
-        return dispatch({
-            type: CREATE_GAME,
-            payload: response.data
-        })
+    return async function(dispatch) {
+        try {
+            const response = await axios.post(
+                'http://localhost:3001/videogames',
+                data
+            )
+            return dispatch({
+                type: CREATE_GAME,
+                payload: response.data
+            })
+        } catch (error) {
+            console.log(error.message)
+        }
     }
 }
 
 export const getGenres = () => {
-    return async function (dispatch) {
+    return async function(dispatch) {
         const response = await axios.get('http://localhost:3001/genres')
 
         return dispatch({
@@ -62,7 +75,7 @@ export const getGenres = () => {
 }
 
 export const getPlatforms = () => {
-    return async function (dispatch) {
+    return async function(dispatch) {
         const response = await axios.get('http://localhost:3001/platforms')
 
         return dispatch({
@@ -73,7 +86,7 @@ export const getPlatforms = () => {
 }
 
 export const searchGame = name => {
-    return async function (dispatch) {
+    return async function(dispatch) {
         try {
             const response = await axios.get(
                 `http://localhost:3001/videogames?name=${name}`,
@@ -91,7 +104,7 @@ export const searchGame = name => {
 }
 
 export const filterGamesByName = (sort, games) => {
-    return function (dispatch) {
+    return function(dispatch) {
         let sortedGames = [...games]
         sortedGames = sortedGames.sort((a, b) => {
             if (a.name.toLowerCase() < b.name.toLowerCase())
@@ -109,7 +122,7 @@ export const filterGamesByName = (sort, games) => {
 }
 
 export const filterGamesByRating = (sort, games) => {
-    return function (dispatch) {
+    return function(dispatch) {
         let sortedGames = [...games]
         sortedGames = sortedGames.sort((a, b) => {
             if (a.rating < b.rating) return sort === 'ratingAsc' ? -1 : 1
@@ -125,7 +138,7 @@ export const filterGamesByRating = (sort, games) => {
 }
 
 export const filterGamesByGenres = (genre, games) => {
-    return function (dispatch) {
+    return function(dispatch) {
         const sortedGames = games.filter(game => {
             return game.genres?.find(g => g.name.toLowerCase() === genre)
         })
@@ -138,17 +151,15 @@ export const filterGamesByGenres = (genre, games) => {
 }
 
 export const filterGamesBySource = (source, games) => {
-    return function (dispatch) {
+    return function(dispatch) {
         let sortedGames
-        if (source !== 'API') {
-            sortedGames = games.filter(g => g.createdByUser)
-        }
         if (source === 'API') {
             sortedGames = games.filter(g => !g.createdByUser)
         }
-        if (source === 'none') {
-            sortedGames = []
+        if (source === 'DB') {
+            sortedGames = games.filter(g => g.createdByUser)
         }
+
         return dispatch({
             type: FILTER_BY_SOURCE,
             payload: sortedGames

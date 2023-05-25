@@ -1,7 +1,6 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import {
-    getGenres,
     filterGamesByName,
     filterGamesByRating,
     filterGamesByGenres,
@@ -14,10 +13,6 @@ const Filters = () => {
     const dispatch = useDispatch()
     const genres = useSelector(state => state.genres)
     const games = useSelector(state => state.games)
-
-    useEffect(() => {
-        dispatch(getGenres())
-    }, [])
 
     const filterByRating = e => {
         e.preventDefault()
@@ -45,12 +40,12 @@ const Filters = () => {
         const ratingFilterSelect = document.getElementById('filterByRating')
         const azFilterSelect = document.getElementById('filterByAZ')
 
-        dispatch(clearFilters(games))
+        sourceFilterSelect.value = 'none'
+        genreFilterSelect.value = 'none'
+        ratingFilterSelect.value = 'none'
+        azFilterSelect.value = 'none'
 
-        sourceFilterSelect[0].setAttribute('selected', 'selected')
-        genreFilterSelect[0].setAttribute('selected', 'selected')
-        ratingFilterSelect[0].setAttribute('selected', 'selected')
-        azFilterSelect[0].setAttribute('selected', 'selected')
+        dispatch(clearFilters(games))
     }
 
     return (
@@ -63,12 +58,8 @@ const Filters = () => {
                 <option key="none" value="none">
                     Filter by Source
                 </option>
-                <option value="API" onClick={filterBySource}>
-                    API
-                </option>
-                <option value="DB" onClick={filterBySource}>
-                    DB
-                </option>
+                <option value="API">API</option>
+                <option value="DB">DB</option>
             </select>
             <select
                 name="filterByGenre"
@@ -98,12 +89,8 @@ const Filters = () => {
                 <option key="none" value="none" onClick={filterByRating}>
                     Filter by Rating
                 </option>
-                <option value="ratingAsc" onClick={filterByRating}>
-                    Rating ASC
-                </option>
-                <option value="ratingDesc" onClick={filterByRating}>
-                    Rating DESC
-                </option>
+                <option value="ratingAsc">Rating ASC</option>
+                <option value="ratingDesc">Rating DESC</option>
             </select>
             <select
                 name="filterByAZ"
@@ -113,12 +100,8 @@ const Filters = () => {
                 <option key="none" value="none">
                     Filter alphabetically
                 </option>
-                <option value="AZ" onClick={filterAZ}>
-                    A-Z
-                </option>
-                <option value="ZA" onClick={filterAZ}>
-                    Z-A
-                </option>
+                <option value="AZ">A-Z</option>
+                <option value="ZA">Z-A</option>
             </select>
             <button onClick={handleClear}>CLEAR</button>
         </div>

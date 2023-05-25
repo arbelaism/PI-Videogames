@@ -5,14 +5,15 @@ import { Link, useHistory } from 'react-router-dom'
 import { NavbarLogo } from '../../components'
 import './Create.css'
 import ArrowLeft from '../../assets/arrow-left-solid.svg'
+import ImagePlaceholder from '../../assets/image-solid.svg'
 
 const Create = () => {
     const initialState = {
         name: '',
         description: '',
-        releaseDate: '',
-        review: '',
+        released: '',
         rating: 0,
+        image: null,
         genres: [],
         platforms: []
     }
@@ -43,7 +44,7 @@ const Create = () => {
         if (input.genres.length < 1) errors.genres = 'Genres required'
         if (input.rating < 1 || input.rating > 5)
             errors.rating = 'Rating, min: 1. max: 5'
-        if ((input.releaseDate = '')) errors.releaseDate = 'Date required'
+        if ((input.released = '')) errors.released = 'Date required'
 
         return errors
     }
@@ -88,6 +89,13 @@ const Create = () => {
                 platforms: [...state.platforms, e.target.value]
             })
         }
+    }
+
+    const handleImage = e => {
+        setState({
+            ...state,
+            image: e.target.files[0]
+        })
     }
 
     const deletePlatform = e => {
@@ -248,15 +256,6 @@ const Create = () => {
                                     )
                                 })}
                             </div>
-                            <label htmlFor="review">Review</label>
-                            <input
-                                type="text"
-                                name="review"
-                                placeholder="Review"
-                                className="pi__create-input"
-                                value={state.review}
-                                onChange={handleInput}
-                            />
                             <div className="pi__create-container_form-sm">
                                 <div className="pi__create-container_form-sm_rating">
                                     <label htmlFor="rating">Rating</label>
@@ -274,17 +273,15 @@ const Create = () => {
                                         onChange={handleInput}
                                     />
                                 </div>
-                                <label htmlFor="releaseDate">
-                                    Release Date
-                                </label>
+                                <label htmlFor="released">Release Date</label>
                                 <input
                                     type="date"
-                                    name="releaseDate"
+                                    name="released"
                                     className={
                                         'pi__create-input' +
-                                        (errors.releaseDate ? ' danger' : '')
+                                        (errors.released ? ' danger' : '')
                                     }
-                                    value={state.releaseDate}
+                                    value={state.released}
                                     onChange={handleInput}
                                 />
                             </div>
@@ -293,6 +290,47 @@ const Create = () => {
                                     * {errors.rating}
                                 </span>
                             )}
+                            <div className="pi__create-container_img">
+                                <div className="pi__create-container_img-input">
+                                    <label htmlFor="image">
+                                        <img
+                                            src={ImagePlaceholder}
+                                            alt="img-placeholder"
+                                        />
+                                        Select an Image
+                                    </label>
+                                    <input
+                                        type="file"
+                                        accept="image/*"
+                                        id="image"
+                                        style={{ display: 'none' }}
+                                        name="image"
+                                        onChange={handleImage}
+                                        className="pi__create-input"
+                                    />
+                                </div>
+                                {state.image ? (
+                                    <>
+                                        <div className="pi__create-container_img-image">
+                                            <img
+                                                src={URL.createObjectURL(
+                                                    state.image
+                                                )}
+                                                alt="not found"
+                                            />
+                                        </div>
+                                        <button
+                                            onClick={() =>
+                                                setState({
+                                                    ...state,
+                                                    image: null
+                                                })
+                                            }>
+                                            &times;
+                                        </button>
+                                    </>
+                                ) : null}
+                            </div>
                             <label htmlFor="description">Description</label>
                             <textarea
                                 name="description"

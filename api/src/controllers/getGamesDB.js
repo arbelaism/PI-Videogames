@@ -10,7 +10,7 @@ const getGamesDB = async () => {
             id: game.id,
             name: game.name,
             description: game.description,
-            released: game.releaseDate,
+            released: game.released,
             rating: game.rating,
             image: game.image,
             genres: game.genres.map(g => {
